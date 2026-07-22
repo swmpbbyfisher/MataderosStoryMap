@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two institutional tracks — Matadero Canyon pilot</title>
+<style>
+/* ============================================================
+   COLORS — edit here
+   ============================================================ */
+:root{
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Track A — IBWC/CILA Minutes (teal) */
+  --a-front-bg:#e4f0f1;  --a-back-bg:#cfe4e7;
+  --a-border:#7fa9b3;    --a-title:#1f4e5a;  --a-body:#2b5a66;
+
+  /* Track B — California instruments (tan) */
+  --b-front-bg:#f6ecdd;  --b-back-bg:#eeddc4;
+  --b-border:#c39a5c;    --b-title:#7a4e12;  --b-body:#74501b;
+
+  /* Pilot geography (terracotta) */
+  --c-front-bg:#f8e5de;  --c-back-bg:#f2d3c8;
+  --c-border:#c8705a;    --c-title:#8c3a22;  --c-body:#88422d;
+
+  --panel-border:#b6babe; --heading:#2f3336; --caption:#6b6f73; --rule:#6f7477;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; padding:14px 10px 4px;
+  font-family:var(--font);
+  background:transparent;
+  color:var(--heading);
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:900px;margin:0 auto}
+
+/* ---------- dashed groups ---------- */
+.tracks{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch}
+.panel{
+  border:1.5px dashed var(--panel-border);
+  border-radius:14px;padding:16px 16px 18px;
+  display:flex;flex-direction:column;gap:14px;
+}
+.panel h2{
+  margin:0 0 2px;text-align:center;
+  font-size:17px;font-weight:600;letter-spacing:-0.01em;color:var(--heading);
+}
+
+/* ---------- flip card ---------- */
+.card{flex:1 1 0;min-height:112px;perspective:1200px;-webkit-tap-highlight-color:transparent}
+.inner{
+  position:relative;width:100%;height:100%;min-height:inherit;
+  transition:transform .55s cubic-bezier(.2,.7,.3,1);
+  transform-style:preserve-3d;
+}
+.card.flipped .inner{transform:rotateY(180deg)}
+
+.face{
+  position:absolute;inset:0;
+  border:1px solid;border-radius:10px;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  transition:visibility 0s linear .28s;
+}
+.back{transform:rotateY(180deg);visibility:hidden}
+.card.flipped .front{visibility:hidden}
+.card.flipped .back{visibility:visible}
+
+/* front is a real button so the whole face is clickable */
+.front{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  width:100%;height:100%;padding:12px 16px;margin:0;
+  font:inherit;text-align:center;cursor:pointer;
+}
+.t{font-size:16px;font-weight:600;line-height:1.25;letter-spacing:-0.01em}
+.s{font-size:13.5px;line-height:1.3;opacity:.92}
+.hint{position:absolute;right:10px;bottom:7px;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;opacity:.45}
+
+/* back holds the text and any links */
+.back{padding:13px 15px 12px;overflow:auto}
+.back .label{
+  display:block;font-size:11px;text-transform:uppercase;letter-spacing:.05em;
+  opacity:.7;margin-bottom:5px;padding-right:22px;
+}
+.back p{margin:0;font-size:13px;line-height:1.5}
+.back a{color:inherit;text-decoration:underline;text-underline-offset:2px;font-weight:600}
+.back a:hover{text-decoration-thickness:2px}
+.close{
+  position:absolute;top:6px;right:7px;
+  width:24px;height:24px;padding:0;line-height:1;
+  background:none;border:0;border-radius:50%;
+  font:inherit;font-size:17px;color:inherit;opacity:.55;cursor:pointer;
+}
+.close:hover{opacity:1}
+
+/* colour assignment */
+.a .face{background:var(--a-front-bg);border-color:var(--a-border);color:var(--a-title)}
+.a .back{background:var(--a-back-bg);color:var(--a-body)}
+.a .s{color:var(--a-body)}
+.b .face{background:var(--b-front-bg);border-color:var(--b-border);color:var(--b-title)}
+.b .back{background:var(--b-back-bg);color:var(--b-body)}
+.b .s{color:var(--b-body)}
+.c .face{background:var(--c-front-bg);border-color:var(--c-border);color:var(--c-title)}
+.c .back{background:var(--c-back-bg);color:var(--c-body)}
+.c .s{color:var(--c-body)}
+
+.front:hover,.front:focus-visible{border-width:1.5px}
+.front:focus-visible,.close:focus-visible,.reset:focus-visible{outline:2px solid var(--rule);outline-offset:2px}
+
+/* ---------- connector ---------- */
+.connector{display:block;width:100%;height:56px;margin:2px 0 0}
+.connector path{fill:none;stroke:var(--rule);stroke-width:1.4}
+
+.pilot{display:flex;justify-content:center}
+.pilot .card{flex:0 1 470px;min-height:98px}
+
+.caption{margin:22px 4px 4px;font-size:14px;line-height:1.55;color:var(--caption)}
+.reset{
+  display:block;margin:0 auto;background:none;border:0;
+  font:inherit;font-size:12.5px;color:var(--caption);cursor:pointer;
+  text-decoration:underline;text-underline-offset:3px;padding:6px;
+}
+.reset[hidden]{display:none}
+
+@media (max-width:560px){
+  .tracks{grid-template-columns:1fr;gap:14px}
+  .connector{height:34px}
+  .card{min-height:120px}
+  .t{font-size:15px}
+}
+@media (prefers-reduced-motion:reduce){.inner{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="tracks">
+
+    <!-- ============================================================
+         TRACK A — IBWC/CILA Minutes
+         TO ADD A LINK, drop an anchor inside the <p>, like this:
+         <a href="https://example.org" target="_blank" rel="noopener">Minute 320</a>
+         target="_blank" keeps readers out of the embedded frame.
+         ============================================================ -->
+    <section class="panel" aria-label="IBWC/CILA minute framework">
+      <h2>IBWC/CILA minute framework</h2>
+
+      <div class="card a">
+        <div class="inner">
+          <button class="face front" aria-expanded="false">
+            <span class="t">Minute 320</span>
+            <span class="s">Governance foundation</span>
+            <span class="hint">flip</span>
+          </button>
+          <div class="face back">
+            <button class="close" aria-label="Flip back">&times;</button>
+            <span class="label">Minute 320</span>
+            <p>Established the framework for binational cooperation in the basin, with work groups on water quality, sediment, and solid waste — the pathway for Matadero Canyon data to reach binational planning.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card a">
+        <div class="inner">
+          <button class="face front" aria-expanded="false">
+            <span class="t">Minute 328</span>
+            <span class="s">Wastewater investment</span>
+            <span class="hint">flip</span>
+          </button>
+          <div class="face back">
+            <button class="close" aria-label="Flip back">&times;</button>
+            <span class="label">Minute 328</span>
+            <p>Formalized major wastewater infrastructure investments to expand treatment capacity and reduce transboundary flows. Vía Rápida Sur is where flooding, sediment, and conveyance risks overlap.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card a">
+        <div class="inner">
+          <button class="face front" aria-expanded="false">
+            <span class="t">Minute 333</span>
+            <span class="s">Sediment &amp; monitoring</span>
+            <span class="hint">flip</span>
+          </button>
+          <div class="face back">
+            <button class="close" aria-label="Flip back">&times;</button>
+            <span class="label">Minute 333</span>
+            <p>Ties infrastructure delivery to watershed-scale management: comprehensive solutions, real-time monitoring, sediment control, and long-term operations and maintenance.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TRACK B — California instruments
+         ============================================================ -->
+    <section class="panel" aria-label="California instruments">
+      <h2>California instruments</h2>
+
+      <div class="card b">
+        <div class="inner">
+          <button class="face front" aria-expanded="false">
+            <span class="t">Proposition 4</span>
+            <span class="s">Resilience &amp; restoration</span>
+            <span class="hint">flip</span>
+          </button>
+          <div class="face back">
+            <button class="close" aria-label="Flip back">&times;</button>
+            <span class="label">Proposition 4</span>
+            <p>Funds climate resilience, flood protection, habitat restoration, water quality, and nature-based infrastructure — priorities that match Matadero Canyon's needs on the U.S. side.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card b">
+        <div class="inner">
+          <button class="face front" aria-expanded="false">
+            <span class="t">Plastic mitigation</span>
+            <span class="s">Waste capture funding</span>
+            <span class="hint">flip</span>
+          </button>
+          <div class="face back">
+            <button class="close" aria-label="Flip back">&times;</button>
+            <span class="label">Plastic mitigation</span>
+            <p>Supports upstream waste capture systems, trash booms, dry-weather capture, and monitoring that keep plastics and debris out of sensitive coastal habitats.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <svg class="connector" viewBox="0 0 900 56" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M225 0 V26 H450 V50"/>
+    <path d="M675 0 V26 H450 V50"/>
+    <path d="M444 42 L450 50 L456 42"/>
+  </svg>
+
+  <!-- ============================================================
+       PILOT GEOGRAPHY
+       ============================================================ -->
+  <div class="pilot">
+    <div class="card c">
+      <div class="inner">
+        <button class="face front" aria-expanded="false">
+          <span class="t">Matadero Canyon sub-basin</span>
+          <span class="s">Aligned investment pilot</span>
+          <span class="hint">flip</span>
+        </button>
+        <div class="face back">
+          <button class="close" aria-label="Flip back">&times;</button>
+          <span class="label">Matadero Canyon sub-basin</span>
+          <p>A pilot geography where upstream action improves downstream infrastructure performance — one reach where both tracks can be sequenced together.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="caption">The IBWC and CILA set shared obligations through the Minute process; California instruments fund work on the U.S. side. Both tracks converge on one pilot geography. Select any element to read more.</p>
+  <button class="reset" hidden>Flip all back</button>
+
+</div>
+
+<script>
+(function(){
+  var cards = document.querySelectorAll('.card');
+  var reset = document.querySelector('.reset');
+
+  function sync(){
+    reset.hidden = !document.querySelector('.card.flipped');
+  }
+
+  function setFlipped(card, on){
+    card.classList.toggle('flipped', on);
+    card.querySelector('.front').setAttribute('aria-expanded', on ? 'true' : 'false');
+    sync();
+  }
+
+  cards.forEach(function(card){
+    card.querySelector('.front').addEventListener('click', function(){
+      setFlipped(card, true);
+    });
+    card.querySelector('.close').addEventListener('click', function(){
+      setFlipped(card, false);
+      card.querySelector('.front').focus();
+    });
+    card.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && card.classList.contains('flipped')){
+        setFlipped(card, false);
+        card.querySelector('.front').focus();
+      }
+    });
+  });
+
+  reset.addEventListener('click', function(){
+    cards.forEach(function(c){ setFlipped(c, false); });
+  });
+})();
+</script>
+</body>
+</html>
