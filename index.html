@@ -49,9 +49,10 @@ body{
 }
 
 /* ---------- flip card ---------- */
-.card{flex:1 1 0;min-height:112px;perspective:1200px;-webkit-tap-highlight-color:transparent}
+.card{flex:1 1 auto;display:flex;flex-direction:column;min-height:112px;perspective:1200px;-webkit-tap-highlight-color:transparent}
 .inner{
-  position:relative;width:100%;height:100%;min-height:inherit;
+  position:relative;width:100%;flex:1 1 auto;min-height:inherit;
+  display:flex;flex-direction:column;
   transition:transform .55s cubic-bezier(.2,.7,.3,1);
   transform-style:preserve-3d;
 }
@@ -63,7 +64,7 @@ body{
   backface-visibility:hidden;-webkit-backface-visibility:hidden;
   transition:visibility 0s linear .28s;
 }
-.back{transform:rotateY(180deg);visibility:hidden}
+.back{position:relative;inset:auto;flex:1 1 auto;transform:rotateY(180deg);visibility:hidden}
 .card.flipped .front{visibility:hidden}
 .card.flipped .back{visibility:visible}
 
@@ -73,26 +74,19 @@ body{
   width:100%;height:100%;padding:12px 16px;margin:0;
   font:inherit;text-align:center;cursor:pointer;
 }
-.t{font-size:16px;font-weight:600;line-height:1.25;letter-spacing:-0.01em}
-.s{font-size:13.5px;line-height:1.3;opacity:.92}
+.t{font-size:19px;font-weight:600;line-height:1.25;letter-spacing:-0.01em}
+.s{font-size:15.5px;line-height:1.3;opacity:.92}
 .hint{position:absolute;right:10px;bottom:7px;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;opacity:.45}
 
 /* back holds the text and any links */
-.back{padding:13px 15px 12px;overflow:auto}
+.back{padding:14px 16px 13px;overflow:hidden;cursor:pointer}
 .back .label{
-  display:block;font-size:11px;text-transform:uppercase;letter-spacing:.05em;
-  opacity:.7;margin-bottom:5px;padding-right:22px;
+  display:block;font-size:12px;text-transform:uppercase;letter-spacing:.05em;
+  opacity:.7;margin-bottom:6px;
 }
-.back p{margin:0;font-size:13px;line-height:1.5}
+.back p{margin:0;font-size:14.5px;line-height:1.5}
 .back a{color:inherit;text-decoration:underline;text-underline-offset:2px;font-weight:600}
 .back a:hover{text-decoration-thickness:2px}
-.close{
-  position:absolute;top:6px;right:7px;
-  width:24px;height:24px;padding:0;line-height:1;
-  background:none;border:0;border-radius:50%;
-  font:inherit;font-size:17px;color:inherit;opacity:.55;cursor:pointer;
-}
-.close:hover{opacity:1}
 
 /* colour assignment */
 .a .face{background:var(--a-front-bg);border-color:var(--a-border);color:var(--a-title)}
@@ -106,14 +100,14 @@ body{
 .c .s{color:var(--c-body)}
 
 .front:hover,.front:focus-visible{border-width:1.5px}
-.front:focus-visible,.close:focus-visible,.reset:focus-visible{outline:2px solid var(--rule);outline-offset:2px}
+.front:focus-visible,.reset:focus-visible{outline:2px solid var(--rule);outline-offset:2px}
 
 /* ---------- connector ---------- */
 .connector{display:block;width:100%;height:56px;margin:2px 0 0}
 .connector path{fill:none;stroke:var(--rule);stroke-width:1.4}
 
 .pilot{display:flex;justify-content:center}
-.pilot .card{flex:0 1 470px;min-height:98px}
+.pilot .card{flex:0 1 470px;min-height:150px}
 
 .caption{margin:22px 4px 4px;font-size:14px;line-height:1.55;color:var(--caption)}
 .reset{
@@ -126,8 +120,8 @@ body{
 @media (max-width:560px){
   .tracks{grid-template-columns:1fr;gap:14px}
   .connector{height:34px}
-  .card{min-height:120px}
-  .t{font-size:15px}
+  .card{min-height:150px}
+  .t{font-size:18px}
 }
 @media (prefers-reduced-motion:reduce){.inner{transition:none}}
 </style>
@@ -154,9 +148,8 @@ body{
             <span class="hint">flip</span>
           </button>
           <div class="face back">
-            <button class="close" aria-label="Flip back">&times;</button>
-            <span class="label">Minute 320</span>
-            <p>Established the framework for binational cooperation in the basin, with work groups on water quality, sediment, and solid waste — the pathway for Matadero Canyon data to reach binational planning.</p>
+<span class="label">Minute 320</span>
+            <p>Signed October 5, 2015. Established the framework for binational cooperation in the basin, creating three work groups — water quality, sediment, and solid waste — plus a Binational Core Group. This is the pathway for Matadero Canyon data to reach binational planning.<br><a href="https://www.ibwc.gov/Organization/Environmental/Minute320.html" target="_blank" rel="noopener">Read more at IBWC.gov ↗</a></p>
           </div>
         </div>
       </div>
@@ -169,9 +162,8 @@ body{
             <span class="hint">flip</span>
           </button>
           <div class="face back">
-            <button class="close" aria-label="Flip back">&times;</button>
-            <span class="label">Minute 328</span>
-            <p>Formalized major wastewater infrastructure investments to expand treatment capacity and reduce transboundary flows. Vía Rápida Sur is where flooding, sediment, and conveyance risks overlap.</p>
+<span class="label">Minute 328</span>
+            <p>Signed July 19, 2022. Expands the South Bay International Wastewater Treatment Plant to 50 MGD and, with paired work in Mexico, aims to eliminate up to ~90% of untreated wastewater reaching the coast — all Minute 328 projects are due by December 31, 2027. Vía Rápida Sur is where flooding, sediment, and conveyance risks overlap.<br><a href="https://www.ibwc.gov/wp-content/uploads/2022/11/Min328.pdf" target="_blank" rel="noopener">Read Minute 328 (PDF) ↗</a></p>
           </div>
         </div>
       </div>
@@ -184,9 +176,8 @@ body{
             <span class="hint">flip</span>
           </button>
           <div class="face back">
-            <button class="close" aria-label="Flip back">&times;</button>
-            <span class="label">Minute 333</span>
-            <p>Ties infrastructure delivery to watershed-scale management: comprehensive solutions, real-time monitoring, sediment control, and long-term operations and maintenance.</p>
+<span class="label">Minute 333</span>
+            <p>Signed December 15, 2025. Ties infrastructure delivery to watershed-scale management — including the Matadero Canyon sediment basin, real-time monitoring, sediment control, and a binational operations-and-maintenance work group.<br><a href="https://www.ibwc.gov/minutes/minute-333/" target="_blank" rel="noopener">Read more at IBWC.gov ↗</a></p>
           </div>
         </div>
       </div>
@@ -206,9 +197,8 @@ body{
             <span class="hint">flip</span>
           </button>
           <div class="face back">
-            <button class="close" aria-label="Flip back">&times;</button>
-            <span class="label">Proposition 4</span>
-            <p>Funds climate resilience, flood protection, habitat restoration, water quality, and nature-based infrastructure — priorities that match Matadero Canyon's needs on the U.S. side.</p>
+<span class="label">Proposition 4</span>
+            <p>Passed November 5, 2024. A $10 billion climate bond funding water resilience, flood protection, habitat restoration, and coastal protection — with roughly $1.2 billion for coastal lands, bays, and oceans and at least 40% directed to disadvantaged communities. Priorities that match Matadero Canyon's needs on the U.S. side.<br><a href="https://bondaccountability.resources.ca.gov/Propositions/Proposition_4_Climate_Bond" target="_blank" rel="noopener">Prop 4 tracker ↗</a></p>
           </div>
         </div>
       </div>
@@ -221,9 +211,8 @@ body{
             <span class="hint">flip</span>
           </button>
           <div class="face back">
-            <button class="close" aria-label="Flip back">&times;</button>
-            <span class="label">Plastic mitigation</span>
-            <p>Supports upstream waste capture systems, trash booms, dry-weather capture, and monitoring that keep plastics and debris out of sensitive coastal habitats.</p>
+<span class="label">Plastic mitigation</span>
+            <p>A $4.7 million State Water Board grant (2024), extended with $2 million more in 2026, funds the Tijuana River trash booms — operated by RCAC — plus dry-weather capture and monitoring that keep plastics and debris out of sensitive coastal habitats. The booms have captured over 1,000 tons of debris.<br><a href="https://www.waterboards.ca.gov/press_room/press_releases/2026/pr20260721-state-water-board-funds-extension-of-successful-tijuana-river-trash-booms-project.html" target="_blank" rel="noopener">State Water Board funding ↗</a></p>
           </div>
         </div>
       </div>
@@ -248,15 +237,13 @@ body{
           <span class="hint">flip</span>
         </button>
         <div class="face back">
-          <button class="close" aria-label="Flip back">&times;</button>
           <span class="label">Matadero Canyon sub-basin</span>
-          <p>A pilot geography where upstream action improves downstream infrastructure performance — one reach where both tracks can be sequenced together.</p>
+          <p>A pilot geography where upstream action improves downstream infrastructure performance. In May 2026, Mexico completed a sediment basin here under Minute 333 — the clearest example of both tracks meeting on the ground.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <p class="caption">The IBWC and CILA set shared obligations through the Minute process; California instruments fund work on the U.S. side. Both tracks converge on one pilot geography. Select any element to read more.</p>
   <button class="reset" hidden>Flip all back</button>
 
 </div>
@@ -277,17 +264,20 @@ body{
   }
 
   cards.forEach(function(card){
-    card.querySelector('.front').addEventListener('click', function(){
+    var front = card.querySelector('.front');
+    var back = card.querySelector('.back');
+    front.addEventListener('click', function(){
       setFlipped(card, true);
     });
-    card.querySelector('.close').addEventListener('click', function(){
+    back.addEventListener('click', function(e){
+      if(e.target.closest('a')) return;   // let links work without flipping
       setFlipped(card, false);
-      card.querySelector('.front').focus();
+      front.focus();
     });
     card.addEventListener('keydown', function(e){
       if(e.key === 'Escape' && card.classList.contains('flipped')){
         setFlipped(card, false);
-        card.querySelector('.front').focus();
+        front.focus();
       }
     });
   });
