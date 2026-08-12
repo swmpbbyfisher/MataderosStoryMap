@@ -78,15 +78,13 @@ body{
 .s{font-size:15.5px;line-height:1.3;opacity:.92}
 .hint{position:absolute;right:10px;bottom:7px;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;opacity:.45}
 
-/* back holds the text and any links */
+/* back holds the text */
 .back{padding:14px 16px 13px;overflow:hidden;cursor:pointer}
 .back .label{
   display:block;font-size:12px;text-transform:uppercase;letter-spacing:.05em;
   opacity:.7;margin-bottom:6px;
 }
 .back p{margin:0;font-size:14.5px;line-height:1.5}
-.back a{color:inherit;text-decoration:underline;text-underline-offset:2px;font-weight:600}
-.back a:hover{text-decoration-thickness:2px}
 
 /* colour assignment */
 .a .face{background:var(--a-front-bg);border-color:var(--a-border);color:var(--a-title)}
@@ -133,10 +131,12 @@ body{
 
     <!-- ============================================================
          TRACK A — IBWC/CILA Minutes
-         TO ADD A LINK, drop an anchor inside the <p>, like this:
-         <a href="https://example.org" target="_top" rel="noopener">Minute 320</a>
-         target="_top" navigates the whole tab so the link isn't blocked
-         as a pop-up when this page is embedded in a sandboxed frame.
+         NOTE: Do NOT put clickable links inside this schematic.
+         ArcGIS StoryMaps embeds this page in a locked-down sandbox
+         that blocks BOTH new-tab (_blank) and same-tab (_top) links,
+         so any anchor here goes nowhere. Put the source links in the
+         story itself as native StoryMaps Button/text-link blocks
+         placed below the embed — those open in a new tab normally.
          ============================================================ -->
     <section class="panel" aria-label="IBWC/CILA minute framework">
       <h2>IBWC/CILA minute framework</h2>
@@ -150,7 +150,7 @@ body{
           </button>
           <div class="face back">
 <span class="label">Minute 320</span>
-            <p>Signed October 5, 2015. Established the framework for binational cooperation in the basin, creating three work groups — water quality, sediment, and solid waste — plus a Binational Core Group. This is the pathway for Matadero Canyon data to reach binational planning.<br><a href="https://www.ibwc.gov/Organization/Environmental/Minute320.html" target="_top" rel="noopener">Read more at IBWC.gov ↗</a></p>
+            <p>Signed October 5, 2015. Established the framework for binational cooperation in the basin, creating three work groups — water quality, sediment, and solid waste — plus a Binational Core Group. This is the pathway for Matadero Canyon data to reach binational planning.</p>
           </div>
         </div>
       </div>
@@ -164,7 +164,7 @@ body{
           </button>
           <div class="face back">
 <span class="label">Minute 328</span>
-            <p>Signed July 19, 2022. Expands the South Bay International Wastewater Treatment Plant to 50 MGD and, with paired work in Mexico, aims to eliminate up to ~90% of untreated wastewater reaching the coast — all Minute 328 projects are due by December 31, 2027. Vía Rápida Sur is where flooding, sediment, and conveyance risks overlap.<br><a href="https://www.ibwc.gov/wp-content/uploads/2022/11/Min328.pdf" target="_top" rel="noopener">Read Minute 328 (PDF) ↗</a></p>
+            <p>Signed July 19, 2022. Expands the South Bay International Wastewater Treatment Plant to 50 MGD and, with paired work in Mexico, aims to eliminate up to ~90% of untreated wastewater reaching the coast — all Minute 328 projects are due by December 31, 2027. Vía Rápida Sur is where flooding, sediment, and conveyance risks overlap.</p>
           </div>
         </div>
       </div>
@@ -178,7 +178,7 @@ body{
           </button>
           <div class="face back">
 <span class="label">Minute 333</span>
-            <p>Signed December 15, 2025. Ties infrastructure delivery to watershed-scale management — including the Matadero Canyon sediment basin, real-time monitoring, sediment control, and a binational operations-and-maintenance work group.<br><a href="https://www.ibwc.gov/wp-content/uploads/2025/12/Min333English1Sided.pdf" target="_top" rel="noopener">Read Minute 333 (PDF) ↗</a></p>
+            <p>Signed December 15, 2025. Ties infrastructure delivery to watershed-scale management — including the Matadero Canyon sediment basin, real-time monitoring, sediment control, and a binational operations-and-maintenance work group.</p>
           </div>
         </div>
       </div>
@@ -199,7 +199,7 @@ body{
           </button>
           <div class="face back">
 <span class="label">Proposition 4</span>
-            <p>Passed November 5, 2024. A $10 billion climate bond funding water resilience, flood protection, habitat restoration, and coastal protection — with roughly $1.2 billion for coastal lands, bays, and oceans and at least 40% directed to disadvantaged communities. Priorities that match Matadero Canyon's needs on the U.S. side.<br><a href="https://bondaccountability.resources.ca.gov/Propositions/Proposition_4_Climate_Bond" target="_top" rel="noopener">Prop 4 tracker ↗</a></p>
+            <p>Passed November 5, 2024. A $10 billion climate bond funding water resilience, flood protection, habitat restoration, and coastal protection — with roughly $1.2 billion for coastal lands, bays, and oceans and at least 40% directed to disadvantaged communities. Priorities that match Matadero Canyon's needs on the U.S. side.</p>
           </div>
         </div>
       </div>
@@ -213,7 +213,7 @@ body{
           </button>
           <div class="face back">
 <span class="label">Plastic mitigation</span>
-            <p>A $4.7 million State Water Board grant (2024), extended with $2 million more in 2026, funds the Tijuana River trash booms — operated by RCAC — plus dry-weather capture and monitoring that keep plastics and debris out of sensitive coastal habitats. The booms have captured over 1,000 tons of debris.<br><a href="https://calepa.ca.gov/programs/sb54ppmf/" target="_top" rel="noopener">SB 54 Plastic Pollution Mitigation Fund ↗</a></p>
+            <p>A $4.7 million State Water Board grant (2024), extended with $2 million more in 2026, funds the Tijuana River trash booms — operated by RCAC — plus dry-weather capture and monitoring that keep plastics and debris out of sensitive coastal habitats. The booms have captured over 1,000 tons of debris.</p>
           </div>
         </div>
       </div>
@@ -270,8 +270,7 @@ body{
     front.addEventListener('click', function(){
       setFlipped(card, true);
     });
-    back.addEventListener('click', function(e){
-      if(e.target.closest('a')) return;   // let links work without flipping
+    back.addEventListener('click', function(){
       setFlipped(card, false);
       front.focus();
     });
